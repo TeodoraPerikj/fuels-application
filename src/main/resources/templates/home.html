@@ -47,9 +47,14 @@
 
         <div>
             <form th:method="POST" th:action="@{/home}">
-                <label for="location">Enter your location: </label>
-                <input id="location" type="text" name="location" placeholder="Enter location"
-                       required="">
+                <label for="location">Choose your location: </label>
+<!--                <input id="location" type="text" name="location" placeholder="Enter location"-->
+<!--                       required="">-->
+
+                <select id="location" name="location" >
+                    <option th:each="street:${streets}" th:text="${street.getName()}" th:value="${street.getName()}">
+                    </option>
+                </select>
 
                 <button type="submit">Submit</button>
             </form>

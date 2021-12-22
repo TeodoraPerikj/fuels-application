@@ -44,17 +44,37 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <label>FUELS NEAR YOU</label>
+        <h3>Fuels near your location</h3>
+        <h3 th:text="${session.location}"></h3>
         <div>
-            <label>Choose fuel</label>
             <form th:action="@{/showFuels}" th:method="POST">
-                <div class="form-group">
-                    <select name="chosenFuel" class="form-control">
-                        <option th:value="${fuel.get().getName()}"
-                                th:text="${fuel.get().getName()}">
-                        </option>
-                    </select>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Fuel name</th>
+                            <th scope="col">Distance in km</th>
+                            <th scope="col">Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${firstFuel.getName()}"></td>
+                            <td th:text="${firstDistance}"></td>
+                            <td th:text="${firstTime}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="${secondFuel.getName()}"></td>
+                            <td th:text="${secondDistance}"></td>
+                            <td th:text="${secondTime}"></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
                 </div>
+
+
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a type="button" class="btn btn-primary" href="/home">Back</a>
             </form>

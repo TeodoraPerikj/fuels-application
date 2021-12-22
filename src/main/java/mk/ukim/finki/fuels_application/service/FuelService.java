@@ -14,4 +14,10 @@ public interface FuelService {
 
     Optional<Fuel> findById(Long id);
 
+    List<Fuel> findFirstTwo(Street street);
+
+    List<Double> findDistances(List<Fuel> fuels, Street street);
+
+    List<String> findTimes(List<Double> distances);
+
 }

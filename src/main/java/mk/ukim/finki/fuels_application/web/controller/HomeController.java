@@ -29,6 +29,8 @@ public class HomeController {
             model.addAttribute("error",error);
         }
 
+        model.addAttribute("streets", this.streetService.findAll());
+
         return "home";
     }
 

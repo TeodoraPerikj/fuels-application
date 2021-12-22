@@ -34,37 +34,50 @@ public class ShowFuelsController {
     @GetMapping
     public String showFuels(Model model, HttpServletRequest request){
 
-        Float latitude = null;
-        Float longitude = null;
-
         String name = (String) request.getSession().getAttribute("location");
 
-        Optional<Street> street = this.streetService.findByName(name);
+        Street street = this.streetService.findByName(name).get();
 
-        if(street.isPresent()) {
-            latitude = street.get().getLatitude();
-            longitude = street.get().getLongitude();
-        }
 
-        List<Fuel> fuels = this.fuelService.findAll();
+//        List<Fuel> fuels = this.fuelService.findAll();
+//
+//        Float razlikaLat = (float)1000;
+//        Float razlikaLong = (float)1000;
+//        Long fuelid = null;
+//
+//        for (Fuel fuel:fuels) {
+//            Float fuelLat = fuel.getLatitude();
+//            Float fuelLong = fuel.getLongitude();
+//
+//            if(abs(latitude - fuelLat)<razlikaLat && abs(longitude-fuelLong)<razlikaLong){
+//                razlikaLat = abs(latitude - fuelLat);
+//                razlikaLong = abs(longitude-fuelLong);
+//                fuelid=fuel.getId();
+//            }
+//
+//        }
 
-        Float razlikaLat = (float)1000;
-        Float razlikaLong = (float)1000;
-        Long fuelid = null;
+        List<Fuel> fuels = this.fuelService.findFirstTwo(street);
 
-        for (Fuel fuel:fuels) {
-            Float fuelLat = fuel.getLatitude();
-            Float fuelLong = fuel.getLongitude();
+        List<Double> distances = this.fuelService.findDistances(fuels, street);
 
-            if(abs(latitude - fuelLat)<razlikaLat && abs(longitude-fuelLong)<razlikaLong){
-                razlikaLat = abs(latitude - fuelLat);
-                razlikaLong = abs(longitude-fuelLong);
-                fuelid=fuel.getId();
-            }
+        List<String> times = this.fuelService.findTimes(distances);
 
-        }
+        Fuel firstFuel = fuels.get(0);
+        Fuel secondFuel = fuels.get(1);
 
-        model.addAttribute("fuel",this.fuelService.findById(fuelid));
+        Double firstDist = distances.get(0);
+        Double secondDist = distances.get(1);
+
+        String firstTime = times.get(0);
+        String secondTime = times.get(1);
+
+        model.addAttribute("firstFuel", firstFuel);
+        model.addAttribute("secondFuel", secondFuel);
+        model.addAttribute("firstDistance", firstDist);
+        model.addAttribute("secondDistance", secondDist);
+        model.addAttribute("firstTime", firstTime);
+        model.addAttribute("secondTime", secondTime);
 
         return "showFuels";
     }
