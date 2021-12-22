@@ -37,4 +37,16 @@ public class AuthServiceImpl implements AuthService {
         return userRepository.save(user);
 
     }
+
+    @Override
+    public User editProfile(String username, String password, String name, String surname) {
+
+        User user = this.userRepository.findByUsernameAndPassword(username, password)
+                .orElseThrow(() -> new UserNotFoundException(username));
+
+        user.setName(name);
+        user.setSurname(surname);
+
+        return this.userRepository.save(user);
+    }
 }
