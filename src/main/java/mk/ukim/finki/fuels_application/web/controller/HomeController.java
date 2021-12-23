@@ -1,7 +1,9 @@
 package mk.ukim.finki.fuels_application.web.controller;
 
 import mk.ukim.finki.fuels_application.model.exceptions.StreetByNameNotFoundException;
+import mk.ukim.finki.fuels_application.service.FuelService;
 import mk.ukim.finki.fuels_application.service.StreetService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeController {
 
     private final StreetService streetService;
+    private final FuelService fuelService;
 
-    public HomeController(StreetService streetService) {
+    public HomeController(StreetService streetService, FuelService fuelService) {
         this.streetService = streetService;
+        this.fuelService = fuelService;
     }
 
     @GetMapping

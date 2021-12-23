@@ -3,7 +3,7 @@
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
-    <title>Home</title>
+    <title>Show Fuels</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -49,26 +49,63 @@
 </nav>
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">FUELS</h1>
-
-        <div>
-            <form th:method="POST" th:action="@{/home}">
-                <label for="location">Choose your location: </label>
-
-                <select id="location" name="location" >
-                    <option th:each="street:${streets}" th:text="${street.getName()}" th:value="${street.getName()}">
-                    </option>
-                </select>
-
-                <button type="submit">Submit</button>
-            </form>
-
-            <div th:if="${hasError}"  th:text="${error}" class="text-danger"></div>
-
+        <h1 class="jumbotron-heading">ALL FUELS</h1>
+    </div>
+</section>
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12" th:if="${showAllFuels.size() > 0}">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Fuel name</th>
+                        <th scope="col">Latitude</th>
+                        <th scope="col">Longitude</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="fuel : ${showAllFuels}" class="product">
+                        <td th:text="${fuel.getName()}"></td>
+                        <td th:text="${fuel.getLatitude()}"></td>
+                        <td th:text="${fuel.getLongitude()}"></td>
+                        <td class="text-right">
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <form th:action="@{'/showAndAddFuel/delete/{id}' (id=${fuel.getId()})}"
+                                      th:method="DELETE">
+                                    <button type="submit"
+                                            class="btn btn-sm btn-danger delete-product">
+                                        <i class="fa fa-trash">Delete</i>
+                                    </button>
+                                </form>
+                            </th:block>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a th:href="@{'/showAndAddFuel/edit-fuel/{id}' (id=${fuel.getId()})}"
+                                   class="btn btn-sm btn-info edit-product">
+                                    <i class="fa fa-trash">Edit</i>
+                                </a>
+                            </th:block>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-    </div>
+        <div th:if="${hasError}"  th:text="${error}" class="text-danger"></div>
 
-</section>
+        <div class="col mb-3">
+            <div class="row">
+                <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/showAndAddFuel/addNewFuel}" class="btn btn-block btn-dark add-product-btn">
+                        Add new fuel
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a type="button" class="btn btn-primary" th:href="@{/home}">Back</a>
+    </div>
+</div>
+
 </body>
 </html>

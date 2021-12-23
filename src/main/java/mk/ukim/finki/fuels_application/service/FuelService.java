@@ -20,4 +20,10 @@ public interface FuelService {
 
     List<String> findTimes(List<Double> distances);
 
+    Fuel addNewFuel(String name, Float latitude, Float longitude);
+
+    void deleteById(Long id);
+
+    Fuel editFuel(Long id, String name, Float latitude, Float longitude);
+
 }

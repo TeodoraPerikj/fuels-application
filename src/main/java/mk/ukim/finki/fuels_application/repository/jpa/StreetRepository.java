@@ -12,4 +12,6 @@ public interface StreetRepository extends JpaRepository<Street,Long> {
     Optional<Street> findByName(String name);
 
     Optional<Street> findById(Long id);
+
+    void deleteByName(String name);
 }

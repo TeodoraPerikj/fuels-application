@@ -7,6 +7,7 @@ import mk.ukim.finki.fuels_application.repository.jpa.FuelRepository;
 import mk.ukim.finki.fuels_application.service.FuelService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -162,6 +163,35 @@ public class FuelServiceImpl implements FuelService {
         }
 
         return times;
+    }
+
+    @Override
+    @Transactional
+    public Fuel addNewFuel(String name, Float latitude, Float longitude) {
+        if(name.isEmpty())
+            return null;
+
+        this.fuelRepository.deleteByName(name);
+
+        return this.fuelRepository.save(new Fuel(name, latitude, longitude));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+       this.fuelRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public Fuel editFuel(Long id, String name, Float latitude, Float longitude) {
+        Fuel fuel = this.fuelRepository.findById(id)
+                .orElseThrow(() -> new FuelNotFoundException(id));
+
+        fuel.setName(name);
+        fuel.setLatitude(latitude);
+        fuel.setLongitude(longitude);
+
+        return this.fuelRepository.save(fuel);
     }
 
 }

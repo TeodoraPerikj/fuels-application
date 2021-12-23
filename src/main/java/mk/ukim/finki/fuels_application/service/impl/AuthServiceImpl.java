@@ -26,22 +26,9 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User register(String username, String password, String repeatPassword, String name, String surname) {
-        if (username==null || username.isEmpty()  || password==null || password.isEmpty())
-            throw new InvalidArgumentsException();
-        if (!password.equals(repeatPassword))
-            throw new PasswordsDoNotMatchException();
-        if(this.userRepository.findByUsername(username).isPresent())
-            throw new UsernameAlreadyExistsException(username);
-        User user = new User(name,surname,username, password);
-        return userRepository.save(user);
+    public User editProfile(String username, String name, String surname) {
 
-    }
-
-    @Override
-    public User editProfile(String username, String password, String name, String surname) {
-
-        User user = this.userRepository.findByUsernameAndPassword(username, password)
+        User user = this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(username));
 
         user.setName(name);

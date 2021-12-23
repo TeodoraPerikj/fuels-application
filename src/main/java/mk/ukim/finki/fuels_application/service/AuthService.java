@@ -7,8 +7,6 @@ public interface AuthService {
 
     User login(String username, String password);
 
-    User register(String username, String password, String repeatPassword, String name, String surname);
-
-    User editProfile(String username, String password, String name, String surname);
+    User editProfile(String username, String name, String surname);
 
 }

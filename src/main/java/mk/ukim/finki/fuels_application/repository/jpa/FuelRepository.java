@@ -15,4 +15,5 @@ public interface FuelRepository extends JpaRepository<Fuel,Long> {
 
     Optional<Fuel> findById(Long id);
 
+    void deleteByName(String name);
 }

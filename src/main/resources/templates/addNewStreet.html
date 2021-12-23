@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Show fuels</title>
+    <title>Add New Street</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -34,51 +34,58 @@
                     <i class="fa fa-shopping-cart"></i> Logout
                 </a></li>
             </ul>
+
         </div>
     </div>
 </nav>
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h3>Fuels near your location</h3>
-        <h3 th:text="${session.location}"></h3>
-        <div>
-            <form th:action="@{/showFuels}" th:method="POST">
+        <h1 class="jumbotron-heading">ADD OR EDIT STREET</h1>
+    </div>
+</section>
 
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Fuel name</th>
-                            <th scope="col">Distance in km</th>
-                            <th scope="col">Time</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td th:text="${firstFuel.getName()}"></td>
-                            <td th:text="${firstDistance}"></td>
-                            <td th:text="${firstTime}"></td>
-                        </tr>
-                        <tr>
-                            <td th:text="${secondFuel.getName()}"></td>
-                            <td th:text="${secondDistance}"></td>
-                            <td th:text="${secondTime}"></td>
-                        </tr>
-
-                        </tbody>
-                    </table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <form th:method="POST" th:action="@{/showAndAddStreet/add-street}">
+                <input id="id" type="hidden" name="id" th:value="(${selectedStreet} != null ? ${selectedStreet.getId()} : '')">
+                <div class="form-group">
+                    <label for="streetName">Street name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="streetName"
+                           name="streetName"
+                           th:value="(${selectedStreet} != null ? ${selectedStreet.getName()} : '')"
+                           required
+                           placeholder="Enter street name">
                 </div>
-
-
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <a type="button" class="btn btn-primary" href="/home">Back</a>
+                <div class="form-group">
+                    <label for="streetLat">Latitude</label>
+                    <input type="text"
+                           class="form-control"
+                           id="streetLat"
+                           name="streetLat"
+                           th:value="(${selectedStreet} != null ? ${selectedStreet.getLatitude()} : '')"
+                           required
+                           placeholder="Latitude">
+                </div>
+                <div class="form-group">
+                    <label for="streetLong">Longitude</label>
+                    <input type="text"
+                           class="form-control"
+                           id="streetLong"
+                           name="streetLong"
+                           th:value="(${selectedStreet} != null ? ${selectedStreet.getLongitude()} : '')"
+                           required
+                           placeholder="Longitude">
+                </div>
+                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                <a type="button" class="btn btn-primary" th:href="@{/showAndAddStreet}">Back</a>
             </form>
-
         </div>
     </div>
-
-</section>
+</div>
 
 </body>
 </html>
