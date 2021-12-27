@@ -45,45 +45,13 @@
     </div>
 </nav><br/>
 
-<!--<section class="jumbotron float-right">
-    <div class="container">
-        <div>
-            <h1>Ја избравте оваа бензинска пумпа</h1>
-            <div>
-                <h3>Лого:</h3>
-                <b><th:block th:text="${session.finalFuel.get().getImageUrl()}"></th:block></b>
-            </div><br/><hr><br>
+<h1 style="padding-left: 220px; font-family: 'Arial Rounded MT Bold', sans-serif; font-style: oblique">Ја избравте оваа бензинска пумпа</h1><hr>
 
-            <div>
-                <h3>Име:</h3>
-                <b><th:block th:text="${session.finalFuel.get().getName()}"></th:block></b>
-            </div><br/><hr><br>
-            <div>
-                <h3>Географска должина:</h3>
-                <b><th:block th:text="${session.finalFuel.get().getLongitude()}"></th:block></b>
-            </div><br/><hr><br>
-
-            <div>
-                <h3>Географска ширина:</h3>
-                <b><th:block th:text="${session.finalFuel.get().getLatitude()}"></th:block></b>
-            </div><br/><hr><br>
-
-            <div>
-             <h3>Кликнете</h3>
-                <b><th:block th:href="${session.finalFuel.get().getPageLink()}"></th:block>ТУКА</b>
-                <h3>за пренасочување кон Веб сајтот на бензинската пумпа</h3></h3>
-            </div><br/><hr><br>
-
-        </div>
-
-        <a type="button" class="btn btn-block" style="font-family:'Andale Mono', monospace;" th:href="@{/showFuels}">Назад</a>
-
-    </div></section> -->
-
-
-    <div class="container">
+ <div class="container">
+     <div class="row">
+         <div class="col">
         <div id="map" style="width:710px; height:600px;" ></div>
-    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
@@ -93,10 +61,9 @@
 
     <script th:inline="javascript">
 
-
-        const longitude = [[${fuelStation.getLongitude()}]];
-        const latitude = [[${fuelStation.getLatitude()}]];
-        const fuelName = [[${fuelStation.getName()}]];
+        const longitude = [[${session.finalFuel.getLongitude()}]];
+        const latitude = [[${session.finalFuel.getLatitude()}]];
+        const fuelName = [[${session.finalFuel.getName()}]];
         var map = L.map('map').setView([latitude, longitude], 10);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -107,9 +74,39 @@
             .bindPopup(fuelName)
             .openPopup();
     </script>
-<hr><br/>
+     </div>
 
+    <div class="col">
+        <div>
+            <img th:src="@{${session.finalFuel.getImageUrl()}}" style="height: 300px; width: 300px" />
+        </div><br/><hr>
 
+        <div>
+            <h3 style="font-family: 'Arial Rounded MT Bold',sans-serif">Име:</h3>
+            <b><th:block th:text="${session.finalFuel.getName()}"></th:block></b>
+        </div><br/><hr>
+        <div>
+            <h3 style="font-family: 'Arial Rounded MT Bold',sans-serif">Географска должина:</h3>
+            <b><th:block th:text="${session.finalFuel.getLongitude()}"></th:block></b>
+        </div><br/><hr>
+
+        <div>
+            <h3 style="font-family: 'Arial Rounded MT Bold',sans-serif">Географска ширина:</h3>
+            <b><th:block th:text="${session.finalFuel.getLatitude()}"></th:block></b>
+        </div><br/><hr>
+
+        <div>
+            <h5 style="font-family: 'Arial Rounded MT Bold',sans-serif">Кликнете</h5>
+            <a style="text-underline: none; color: darkgreen" th:href="${session.finalFuel.getPageLink()}">ТУКА</a>
+            <h6 style="font-family: 'Arial Rounded MT Bold',sans-serif">за пренасочување кон Веб сајтот на бензинската пумпа</h6></h3>
+        </div><br/><hr>
+    </div>
+     </div>
+
+</div>
+
+<a type="button" class="btn btn-outline-secondary" style="font-family:'Andale Mono', monospace; margin-left: 950px" th:href="@{/showFuels}">Назад</a>
+<br/><hr>
     <!-- Footer -->
     <footer class="text-black-50 mt-xl-5">
         <div class="container">
@@ -154,6 +151,5 @@
             © 2021 Copyright: Team SIT
         </div>
     </footer>
-
 </body>
 </html>

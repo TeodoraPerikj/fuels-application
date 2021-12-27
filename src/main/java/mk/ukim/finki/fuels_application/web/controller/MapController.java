@@ -16,10 +16,9 @@ public class MapController {
         this.fuelService = fuelService;
     }
 
-    @GetMapping("/{fuelId}")
-    public String getPage(@PathVariable Long fuelId, Model model)
+    @GetMapping
+    public String getPage()
     {
-        model.addAttribute("fuelStation", this.fuelService.findById(fuelId).get());
         return "showMap";
     }
 }

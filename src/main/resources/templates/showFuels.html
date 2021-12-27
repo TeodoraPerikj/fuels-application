@@ -40,72 +40,42 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h3>Најблиски бензински пумпи од Вашата локација:</h3>
-        <h3 style="font-family: 'Candara Light' , sans-serif ;color: darkgreen; font-weight: bold; font-style: oblique" th:text="${session.location}"></h3><br/><br/>
-        <div>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Лого</th>
-                            <th scope="col">Име на бензинската</th>
-                            <th scope="col">Растојание во km</th>
-                            <th scope="col">Време на пристигнување</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>
-                                <img th:src="@{${firstFuel.getImageUrl()}}" style="height: 100px; width: 100px" />
-                            </td>
-                            <td th:text="${firstFuel.getName()}"></td>
-                            <td th:text="${firstDistance}"></td>
-                            <td th:text="${firstTime}"></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img th:src="@{${secondFuel.getImageUrl()}}" style="height: 100px; width: 100px" />
-                            </td>
-                            <td th:text="${secondFuel.getName()}"></td>
-                            <td th:text="${secondDistance}"></td>
-                            <td th:text="${secondTime}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-         <!--   <ul style="list-style: none">
+        <h3 style="font-family: 'Arial Rounded MT Bold',sans-serif">Најблиските бензински пумпи до Вашата локација</h3>
+        <h3 style="font-family: 'Arial Rounded MT Bold', sans-serif; font-style: oblique; color: darkslategray" th:text="${session.location}"></h3> <br/><hr><br/>
+        <div style="float: left; padding-left: 250px">
+            <form th:action="@{/showFuels}" th:method="POST">
+            <ul style="list-style: none">
                 <li th:each="fuel:${fuels}">
                     <input style="font-weight: bold" type="radio" name="chosenFuel" th:text="${fuel.getName()}" th:value="${fuel.getName()}">
                 </li>
             </ul>
-
-            <button style="margin-left: 450px;" type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-outline-secondary" style="margin-left: 140px; color: darkgreen;margin-top: 50px; margin-right: 15px; text-decoration: none; font-family: 'Arial Rounded MT Bold', sans-serif">Поднеси</button>
             </form>
-
         </div>
+
         <div style="display: inline; float: left">
             <ul style="list-style: none">
                 <li th:each="distance:${distances}" style="font-weight: bold" th:text="${distance}"></li>
             </ul>
         </div>
+
         <div style="display: inline; float: left">
             <ul style="list-style: none">
                 <li th:each="time:${times}" style="font-weight: bold" th:text="${time}"></li>
             </ul>
-        </div>-->
+        </div><br/><br/>
 
-                <a style="color: darkgreen;margin-right: 15px; text-decoration: none; font-family: 'Arial Rounded MT Bold', sans-serif" th:href="@{/showMap/{fuelId}(fuelId=${firstFuel.getId()})}">Поднеси</a>
-                <a type="button" class="btn btn-info" href="/home" style="font-family: 'Arial Rounded MT Bold', sans-serif">Назад</a>
-
-        </div>
     </div>
+<br/><br/><hr>
+        <div class="container" style="align-items: center; padding-right: 100px">
+            <a type="button" class="btn btn-info" href="/home" style="margin-left: -390px; margin-top: -20px;font-family: 'Arial Rounded MT Bold', sans-serif">Назад</a>
+        </div>
 
 </section>
 
 <!-- Footer -->
 <footer class="text-black-50 mt-xl-5">
-    <div class="container">
+    <div class="container" style="align-items: center">
         <div class="row">
             <div class="col-md-3 col-lg-4 col-xl-3">
                 <h5>За нас</h5>

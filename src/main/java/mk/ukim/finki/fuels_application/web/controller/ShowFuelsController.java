@@ -44,8 +44,6 @@ public class ShowFuelsController {
 
         List<String> times = this.fuelService.findTimes(distances);
 
-       // Fuel fuel = fuels.get(0);
-
         Fuel firstFuel = fuels.get(0);
         Fuel secondFuel = fuels.get(1);
 
@@ -55,16 +53,16 @@ public class ShowFuelsController {
         String firstTime = times.get(0);
         String secondTime = times.get(1);
 
-        model.addAttribute("firstFuel", firstFuel);
-        model.addAttribute("secondFuel", secondFuel);
-        model.addAttribute("firstDistance", firstDist);
-        model.addAttribute("secondDistance", secondDist);
-        model.addAttribute("firstTime", firstTime);
-        model.addAttribute("secondTime", secondTime);
+//        model.addAttribute("firstFuel", firstFuel);
+//        model.addAttribute("secondFuel", secondFuel);
+//        model.addAttribute("firstDistance", firstDist);
+//        model.addAttribute("secondDistance", secondDist);
+//        model.addAttribute("firstTime", firstTime);
+//        model.addAttribute("secondTime", secondTime);
 
-//        model.addAttribute("fuels", fuels);
-//        model.addAttribute("distances", distances);
-//        model.addAttribute("times", times);
+        model.addAttribute("fuels", fuels);
+        model.addAttribute("distances", distances);
+        model.addAttribute("times", times);
 
         return "showFuels";
     }
@@ -73,7 +71,7 @@ public class ShowFuelsController {
     public String chosenFuel(HttpServletRequest request){
 
         Optional<Fuel> fuel = this.fuelService.findByName(request.getParameter("chosenFuel"));
-        request.getSession().setAttribute("finalFuel",fuel);
+        request.getSession().setAttribute("finalFuel", fuel.get());
         return "redirect:/showMap";
     }
 
