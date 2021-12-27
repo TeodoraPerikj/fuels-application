@@ -3,25 +3,104 @@
 <head>
     <head>
         <meta charset="UTF-8"/>
-        <title>Accept Showing Location</title>
+        <title>Споделување локација</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
 </head>
-<body>
+<!--
+<body style="background-color: #cedbd8">
+
+    <div style="background-image: url('https://www.lifewire.com/thmb/6DrtO40qnoND20afLabJ8MHUN4w=/1614x1105/filters:fill(auto,1)/Maplocation_-5a492a4e482c52003601ea25.jpg'); background-size:100% 100%; height:700px; "></div>
+
 <div class="container">
 <br/>
-<h3 class="form-signin-heading">If you want to use the application, you have to allow us to use your location</h3>
+<h3 style="font-family: 'Franklin Gothic Book',sans-serif" class="form-signin-heading">Доколку сакате да ја користите нашата апликација, потребно е да ја споделите Вашата локација.</h3>
 <form class="form-signin mt-xl-5" th:method="POST" th:action="@{/acceptShowingLocation}">
-    <select name="accept">
-        <option th:value="YES">I allow to use my location</option>
-        <option th:value="NO">I do not allow to use my location</option>
+
+    <select name="accept" style="font-family: 'Cambria Math', serif">
+        <option th:value="YES" >Дозволувам споделување на мојата локација</option>
+        <option th:value="NO">Не дозволувам споделување на мојата локација</option>
     </select>
 
-    <button type="submit">Submit</button>
+    <button class="btn btn btn-secondary btn-lg" type="submit">Поднеси</button>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 </form>
 </div>
+
+</body>
+</html>
+-->
+
+<body style="background-color: #cedbd8">
+
+<section class="jumbotron text-center" style="background-image: url('https://w0.peakpx.com/wallpaper/732/20/HD-wallpaper-navigation-arrow-ultra-aero-vector-art-travel-design-arrow-maps-location-navigation-greenbackground-graphicdesign-icons.jpg'); height: 800px">
+    <div class="container">
+        <h3 style="font-family: 'Franklin Gothic Book',sans-serif; padding-top: 70px;" class="form-signin-heading">Доколку сакате да ја користите нашата апликација, потребно е да ја споделите Вашата локација.</h3>
+        <form class="form-signin mt-xl-5" th:method="POST" th:action="@{/acceptShowingLocation}">
+
+            <select name="accept" style="font-family: 'Cambria Math', serif">
+                <option th:value="YES" >Дозволувам споделување на мојата локација</option>
+                <option th:value="NO">Не дозволувам споделување на мојата локација</option>
+            </select>
+            <br/><br/><br/>
+            <button class="btn btn btn-secondary btn-lg" type="submit">Поднеси</button>
+        </form>
+    </div>
+    <br/><br/><br/>
+
+</section>
+<hr>
+<!-- Footer -->
+<footer class="text-black-50 mt-xl-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-lg-4 col-xl-3">
+                <h5>За нас</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <p class="mb-0">
+                    Ние сме Веб сајт кој Ви овозможува со помош на Вашиот профил да ја пронајдете најблиската бензинска пумпа од Вашата локација.
+                </p>
+            </div>
+
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
+                <h5>Линкови до некои мапи</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <ul class="list-unstyled">
+                    <li><a style="color: darkgreen" href="https://www.openstreetmap.org/#map=10/41.9143/21.3863">OpenStreetMap</a></li>
+                    <li><a style="color: darkgreen" href="https://www.google.com/maps">Google Maps</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-3">
+                <h5>Контакт</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <ul class="list-unstyled">
+                    <li><i class="fa fa-home mr-2"></i>Теодора Периќ</li>
+                    <li><i class="fa fa-envelope mr-2"></i>tea.perik@yahoo.com</li>
+                    <li><i class="fa fa-phone mr-2"></i> 075/249-675</li><br/>
+
+                    <li><i class="fa fa-home mr-2"></i>Ива Угриноска</li>
+                    <li><i class="fa fa-envelope mr-2"></i> iva.ugrinoska@yahoo.com</li>
+                    <li><i class="fa fa-phone mr-2"></i> 071/233-455</li><br/>
+
+                    <li><i class="fa fa-home mr-2"></i>Сара Паункоска</li>
+                    <li><i class="fa fa-envelope mr-2"></i> sara.paunkoska@yahoo.com</li>
+                    <li><i class="fa fa-print mr-2"></i>070/123-452</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3" style="background-color: cadetblue">
+        © 2021 Copyright: Team SIT
+    </div>
+</footer>
+
 </body>
 </html>

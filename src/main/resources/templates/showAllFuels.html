@@ -9,10 +9,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
-<body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<body style="background-color: #cedbd8">
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: cadetblue;" >
     <div class="container">
-        <a class="navbar-brand" href="/home">FUELS</a>
+        <a class="navbar-brand" href="/home">БЕНЗИНСКИ ПУМПИ</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -21,15 +21,15 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
             <ul class="navbar-nav m-auto">
                 <li class="nav-item m-auto">
-                    <a class="nav-link active" href="/home">Home</a>
+                    <a class="nav-link active" href="/home" style="font-family:'Andale Mono', monospace; color: aliceblue">Почетна</a>
                 </li>
 
                 <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active" th:href="@{/showAndAddFuel}">Show Fuels</a>
+                    <a class="nav-link active" style="font-family:'Andale Mono', monospace; color: aliceblue" th:href="@{/showAndAddFuel}">Приказ на бензински пумпи</a>
                 </li>
 
                 <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active" th:href="@{/showAndAddStreet}">Show Streets</a>
+                    <a class="nav-link active" style="font-family:'Andale Mono', monospace; color: aliceblue" th:href="@{/showAndAddStreet}">Приказ на улици</a>
                 </li>
             </ul>
 
@@ -40,7 +40,7 @@
 
                     </th:block></a></li>
                 <li class="nav-item"><a class="btn btn-light btn-sm ml-3" href="/logout">
-                    <i class="fa fa-shopping-cart"></i> Logout
+                    <i class="fa fa-shopping-cart" style="font-family:'Andale Mono', monospace; font-style: oblique; margin-top: 15px"></i> Одјави се
                 </a></li>
             </ul>
 
@@ -49,7 +49,7 @@
 </nav>
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">ALL FUELS</h1>
+        <h1 class="jumbotron-heading">БЕНЗИНСКИ ПУМПИ</h1>
     </div>
 </section>
 <div class="container mb-4">
@@ -59,13 +59,17 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">Fuel name</th>
-                        <th scope="col">Latitude</th>
-                        <th scope="col">Longitude</th>
+                        <th scope="col">Лого</th>
+                        <th scope="col">Име на бензинската</th>
+                        <th scope="col">Географска ширина</th>
+                        <th scope="col">Географска должина</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="fuel : ${showAllFuels}" class="product">
+                        <td>
+                            <img th:src="@{${fuel.getImageUrl()}}" style="height: 100px; width: 100px" />
+                        </td>
                         <td th:text="${fuel.getName()}"></td>
                         <td th:text="${fuel.getLatitude()}"></td>
                         <td th:text="${fuel.getLongitude()}"></td>
@@ -75,14 +79,14 @@
                                       th:method="DELETE">
                                     <button type="submit"
                                             class="btn btn-sm btn-danger delete-product">
-                                        <i class="fa fa-trash">Delete</i>
+                                        <i class="fa fa-trash">Избриши</i>
                                     </button>
                                 </form>
                             </th:block>
                             <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                                 <a th:href="@{'/showAndAddFuel/edit-fuel/{id}' (id=${fuel.getId()})}"
                                    class="btn btn-sm btn-info edit-product">
-                                    <i class="fa fa-trash">Edit</i>
+                                    <i class="fa fa-trash" style="font-family:'Andale Mono', monospace">Промени</i>
                                 </a>
                             </th:block>
                         </td>
@@ -97,15 +101,60 @@
         <div class="col mb-3">
             <div class="row">
                 <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/showAndAddFuel/addNewFuel}" class="btn btn-block btn-dark add-product-btn">
-                        Add new fuel
+                    <a th:href="@{/showAndAddFuel/addNewFuel}" class="btn btn-block btn-info add-product-btn" style="font-family:'Andale Mono', monospace; font-style: oblique;">
+                        Додади нова бензинска
                     </a>
                 </div>
             </div>
         </div>
-        <a type="button" class="btn btn-primary" th:href="@{/home}">Back</a>
+        <a type="button" class="btn btn-block" style="font-family:'Andale Mono', monospace;" th:href="@{/home}">Назад</a>
     </div>
 </div>
+<hr>
 
+<!-- Footer -->
+<footer class="text-black-50 mt-xl-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-lg-4 col-xl-3">
+                <h5>За нас</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <p class="mb-0">
+                    Ние сме Веб сајт кој Ви овозможува со помош на Вашиот профил да ја пронајдете најблиската бензинска пумпа од Вашата локација.
+                </p>
+            </div>
+
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
+                <h5>Линкови до некои мапи</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <ul class="list-unstyled">
+                    <li><a style="color: darkgreen" href="https://www.openstreetmap.org/#map=10/41.9143/21.3863">OpenStreetMap</a></li>
+                    <li><a style="color: darkgreen" href="https://www.google.com/maps">Google Maps</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-3">
+                <h5>Контакт</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <ul class="list-unstyled">
+                    <li><i class="fa fa-home mr-2"></i>Теодора Периќ</li>
+                    <li><i class="fa fa-envelope mr-2"></i>tea.perik@yahoo.com</li>
+                    <li><i class="fa fa-phone mr-2"></i> 075/249-675</li><br/>
+
+                    <li><i class="fa fa-home mr-2"></i>Ива Угриноска</li>
+                    <li><i class="fa fa-envelope mr-2"></i> iva.ugrinoska@yahoo.com</li>
+                    <li><i class="fa fa-phone mr-2"></i> 071/233-455</li><br/>
+
+                    <li><i class="fa fa-home mr-2"></i>Сара Паункоска</li>
+                    <li><i class="fa fa-envelope mr-2"></i> sara.paunkoska@yahoo.com</li>
+                    <li><i class="fa fa-print mr-2"></i>070/123-452</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3" style="background-color: cadetblue">
+        © 2021 Copyright: Team SIT
+    </div>
+</footer>
 </body>
 </html>

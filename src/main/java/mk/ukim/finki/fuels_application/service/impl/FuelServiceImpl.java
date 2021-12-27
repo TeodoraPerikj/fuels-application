@@ -139,10 +139,10 @@ public class FuelServiceImpl implements FuelService {
                 Long seconds = time - 60;
 
                 if(seconds != 0){
-                    times.add("1 minuta "+seconds+" sekundi");
+                    times.add("1 минута "+seconds+" секунди");
                 }
                 else {
-                    times.add("1 minuta");
+                    times.add("1 минута");
                 }
 
             }
@@ -150,14 +150,14 @@ public class FuelServiceImpl implements FuelService {
                 Long seconds = time - 120;
 
                 if(seconds != 0){
-                    times.add("2 minuti "+seconds+" sekundi");
+                    times.add("2 минути "+seconds+" секунди");
                 }
                 else {
-                    times.add("2 minuti");
+                    times.add("2 минути");
                 }
             }
             else {
-                times.add(String.valueOf(time)+" sekundi");
+                times.add(String.valueOf(time)+" секунди");
             }
 
         }
@@ -167,13 +167,13 @@ public class FuelServiceImpl implements FuelService {
 
     @Override
     @Transactional
-    public Fuel addNewFuel(String name, Float latitude, Float longitude) {
+    public Fuel addNewFuel(String name, Float latitude, Float longitude, String imageUrl, String pageLink) {
         if(name.isEmpty())
             return null;
 
         this.fuelRepository.deleteByName(name);
 
-        return this.fuelRepository.save(new Fuel(name, latitude, longitude));
+        return this.fuelRepository.save(new Fuel(name, latitude, longitude, imageUrl, pageLink));
     }
 
     @Override
@@ -183,13 +183,15 @@ public class FuelServiceImpl implements FuelService {
 
     @Override
     @Transactional
-    public Fuel editFuel(Long id, String name, Float latitude, Float longitude) {
+    public Fuel editFuel(Long id, String name, Float latitude, Float longitude, String imageUrl, String pageLink) {
         Fuel fuel = this.fuelRepository.findById(id)
                 .orElseThrow(() -> new FuelNotFoundException(id));
 
         fuel.setName(name);
         fuel.setLatitude(latitude);
         fuel.setLongitude(longitude);
+        fuel.setImageUrl(imageUrl);
+        fuel.setPageLink(pageLink);
 
         return this.fuelRepository.save(fuel);
     }

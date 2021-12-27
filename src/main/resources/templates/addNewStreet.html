@@ -8,10 +8,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
-<body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<body style="background-color: #cedbd8">
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: cadetblue;" >
     <div class="container">
-        <a class="navbar-brand" href="/home">FUELS</a>
+        <a class="navbar-brand" href="/home" style="font-style: oblique; font-family:'Andale Mono', monospace; color: aliceblue">Бензински пумпи</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
             <ul class="navbar-nav m-auto">
                 <li class="nav-item m-auto">
-                    <a class="nav-link active" href="/home">Home</a>
+                    <a class="nav-link active" href="/home" style="font-family:'Andale Mono', monospace; color: aliceblue">Почетна</a>
                 </li>
             </ul>
 
@@ -31,7 +31,7 @@
 
                     </th:block></a></li>
                 <li class="nav-item"><a class="btn btn-light btn-sm ml-3" href="/logout">
-                    <i class="fa fa-shopping-cart"></i> Logout
+                    <i class="fa fa-shopping-cart" style="font-family:'Andale Mono', monospace; font-style: oblique; margin-top: 15px"></i> Одјави се
                 </a></li>
             </ul>
 
@@ -41,17 +41,17 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">ADD OR EDIT STREET</h1>
+        <h1 class="jumbotron-heading">Додади или промени улица</h1>
     </div>
 </section>
 
-<div class="container">
+<div class="container" style="align-items: center">
     <div class="row">
         <div class="col-md-5">
             <form th:method="POST" th:action="@{/showAndAddStreet/add-street}">
                 <input id="id" type="hidden" name="id" th:value="(${selectedStreet} != null ? ${selectedStreet.getId()} : '')">
                 <div class="form-group">
-                    <label for="streetName">Street name</label>
+                    <label for="streetName">Име на улица</label>
                     <input type="text"
                            class="form-control"
                            id="streetName"
@@ -61,7 +61,7 @@
                            placeholder="Enter street name">
                 </div>
                 <div class="form-group">
-                    <label for="streetLat">Latitude</label>
+                    <label for="streetLat">Географска ширина</label>
                     <input type="text"
                            class="form-control"
                            id="streetLat"
@@ -71,7 +71,7 @@
                            placeholder="Latitude">
                 </div>
                 <div class="form-group">
-                    <label for="streetLong">Longitude</label>
+                    <label for="streetLong">Географска должина</label>
                     <input type="text"
                            class="form-control"
                            id="streetLong"
@@ -80,12 +80,14 @@
                            required
                            placeholder="Longitude">
                 </div>
-                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-                <a type="button" class="btn btn-primary" th:href="@{/showAndAddStreet}">Back</a>
-            </form>
+                <button id="submit" type="submit" class="btn btn-secondary">Поднеси</button>
+                <a type="button" class="btn btn-secondary" th:href="@{/showAndAddStreet}" style="font-family:'Andale Mono', monospace">Назад</a>
+            </form><hr>
         </div>
     </div>
 </div>
-
+<footer class="text-center p-3" style="background-color: cadetblue">
+    © 2021 Copyright: Team SIT
+</footer>
 </body>
 </html>

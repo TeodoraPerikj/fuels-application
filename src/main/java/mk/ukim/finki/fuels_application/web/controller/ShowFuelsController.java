@@ -38,30 +38,13 @@ public class ShowFuelsController {
 
         Street street = this.streetService.findByName(name).get();
 
-
-//        List<Fuel> fuels = this.fuelService.findAll();
-//
-//        Float razlikaLat = (float)1000;
-//        Float razlikaLong = (float)1000;
-//        Long fuelid = null;
-//
-//        for (Fuel fuel:fuels) {
-//            Float fuelLat = fuel.getLatitude();
-//            Float fuelLong = fuel.getLongitude();
-//
-//            if(abs(latitude - fuelLat)<razlikaLat && abs(longitude-fuelLong)<razlikaLong){
-//                razlikaLat = abs(latitude - fuelLat);
-//                razlikaLong = abs(longitude-fuelLong);
-//                fuelid=fuel.getId();
-//            }
-//
-//        }
-
         List<Fuel> fuels = this.fuelService.findFirstTwo(street);
 
         List<Double> distances = this.fuelService.findDistances(fuels, street);
 
         List<String> times = this.fuelService.findTimes(distances);
+
+       // Fuel fuel = fuels.get(0);
 
         Fuel firstFuel = fuels.get(0);
         Fuel secondFuel = fuels.get(1);
@@ -79,6 +62,10 @@ public class ShowFuelsController {
         model.addAttribute("firstTime", firstTime);
         model.addAttribute("secondTime", secondTime);
 
+//        model.addAttribute("fuels", fuels);
+//        model.addAttribute("distances", distances);
+//        model.addAttribute("times", times);
+
         return "showFuels";
     }
 
@@ -87,7 +74,7 @@ public class ShowFuelsController {
 
         Optional<Fuel> fuel = this.fuelService.findByName(request.getParameter("chosenFuel"));
         request.getSession().setAttribute("finalFuel",fuel);
-        return "redirect:/chosen-fuel";
+        return "redirect:/showMap";
     }
 
 }

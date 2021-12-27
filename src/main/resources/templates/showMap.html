@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+
+</head>
+<body style="background-color: #cedbd8">
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: cadetblue;" >
+    <div class="container">
+        <a class="navbar-brand" href="/home" style="font-style: oblique; font-family:'Andale Mono', monospace; color: aliceblue">Бензински пумпи</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item m-auto">
+                    <a class="nav-link active" href="/home" style="font-family:'Andale Mono', monospace; color: aliceblue">Почетна</a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="nav-item"><a class="nav-link" th:href="@{/changeProfile}">
+                    <th:block th:if="${#request.getRemoteUser() != null}" th:text="${#request.getRemoteUser()}">
+
+                    </th:block></a></li>
+                <li class="nav-item"><a class="btn btn-light btn-sm ml-3" href="/logout">
+                    <i class="fa fa-shopping-cart" style="font-family:'Andale Mono', monospace; font-style: oblique; margin-top: 15px"></i> Одјави се
+                </a></li>
+            </ul>
+
+        </div>
+    </div>
+</nav><br/>
+
+<!--<section class="jumbotron float-right">
+    <div class="container">
+        <div>
+            <h1>Ја избравте оваа бензинска пумпа</h1>
+            <div>
+                <h3>Лого:</h3>
+                <b><th:block th:text="${session.finalFuel.get().getImageUrl()}"></th:block></b>
+            </div><br/><hr><br>
+
+            <div>
+                <h3>Име:</h3>
+                <b><th:block th:text="${session.finalFuel.get().getName()}"></th:block></b>
+            </div><br/><hr><br>
+            <div>
+                <h3>Географска должина:</h3>
+                <b><th:block th:text="${session.finalFuel.get().getLongitude()}"></th:block></b>
+            </div><br/><hr><br>
+
+            <div>
+                <h3>Географска ширина:</h3>
+                <b><th:block th:text="${session.finalFuel.get().getLatitude()}"></th:block></b>
+            </div><br/><hr><br>
+
+            <div>
+             <h3>Кликнете</h3>
+                <b><th:block th:href="${session.finalFuel.get().getPageLink()}"></th:block>ТУКА</b>
+                <h3>за пренасочување кон Веб сајтот на бензинската пумпа</h3></h3>
+            </div><br/><hr><br>
+
+        </div>
+
+        <a type="button" class="btn btn-block" style="font-family:'Andale Mono', monospace;" th:href="@{/showFuels}">Назад</a>
+
+    </div></section> -->
+
+
+    <div class="container">
+        <div id="map" style="width:710px; height:600px;" ></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <script th:inline="javascript">
+
+
+        const longitude = [[${fuelStation.getLongitude()}]];
+        const latitude = [[${fuelStation.getLatitude()}]];
+        const fuelName = [[${fuelStation.getName()}]];
+        var map = L.map('map').setView([latitude, longitude], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([latitude,longitude]).addTo(map)
+            .bindPopup(fuelName)
+            .openPopup();
+    </script>
+<hr><br/>
+
+
+    <!-- Footer -->
+    <footer class="text-black-50 mt-xl-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-lg-4 col-xl-3">
+                    <h5>За нас</h5>
+                    <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                    <p class="mb-0">
+                        Ние сме Веб сајт кој Ви овозможува со помош на Вашиот профил да ја пронајдете најблиската бензинска пумпа од Вашата локација.
+                    </p>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
+                    <h5>Линкови до некои мапи</h5>
+                    <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                    <ul class="list-unstyled">
+                        <li><a style="color: darkgreen" href="https://www.openstreetmap.org/#map=10/41.9143/21.3863">OpenStreetMap</a></li>
+                        <li><a style="color: darkgreen" href="https://www.google.com/maps">Google Maps</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 col-lg-3 col-xl-3">
+                    <h5>Контакт</h5>
+                    <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-home mr-2"></i>Теодора Периќ</li>
+                        <li><i class="fa fa-envelope mr-2"></i>tea.perik@yahoo.com</li>
+                        <li><i class="fa fa-phone mr-2"></i> 075/249-675</li><br/>
+
+                        <li><i class="fa fa-home mr-2"></i>Ива Угриноска</li>
+                        <li><i class="fa fa-envelope mr-2"></i> iva.ugrinoska@yahoo.com</li>
+                        <li><i class="fa fa-phone mr-2"></i> 071/233-455</li><br/>
+
+                        <li><i class="fa fa-home mr-2"></i>Сара Паункоска</li>
+                        <li><i class="fa fa-envelope mr-2"></i> sara.paunkoska@yahoo.com</li>
+                        <li><i class="fa fa-print mr-2"></i>070/123-452</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3" style="background-color: cadetblue">
+            © 2021 Copyright: Team SIT
+        </div>
+    </footer>
+
+</body>
+</html>

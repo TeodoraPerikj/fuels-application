@@ -8,10 +8,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
-<body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<body style="background-color: #cedbd8">
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: cadetblue;" >
     <div class="container">
-        <a class="navbar-brand" href="/home">FUELS</a>
+        <a class="navbar-brand" href="/home" style="font-style: oblique; font-family:'Andale Mono', monospace; color: aliceblue">Бензински пумпи</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
             <ul class="navbar-nav m-auto">
                 <li class="nav-item m-auto">
-                    <a class="nav-link active" href="/home">Home</a>
+                    <a class="nav-link active" href="/home" style="font-family:'Andale Mono', monospace; color: aliceblue">Почетна</a>
                 </li>
             </ul>
 
@@ -31,54 +31,121 @@
 
                     </th:block></a></li>
                 <li class="nav-item"><a class="btn btn-light btn-sm ml-3" href="/logout">
-                    <i class="fa fa-shopping-cart"></i> Logout
+                    <i class="fa fa-shopping-cart" style="font-family:'Andale Mono', monospace; font-style: oblique; margin-top: 15px"></i> Одјави се
                 </a></li>
             </ul>
         </div>
-    </div>
+    </div><br/><br/><br/>
 </nav>
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h3>Fuels near your location</h3>
-        <h3 th:text="${session.location}"></h3>
+        <h3>Најблиски бензински пумпи од Вашата локација:</h3>
+        <h3 style="font-family: 'Candara Light' , sans-serif ;color: darkgreen; font-weight: bold; font-style: oblique" th:text="${session.location}"></h3><br/><br/>
         <div>
-            <form th:action="@{/showFuels}" th:method="POST">
-
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">Fuel name</th>
-                            <th scope="col">Distance in km</th>
-                            <th scope="col">Time</th>
+                            <th scope="col">Лого</th>
+                            <th scope="col">Име на бензинската</th>
+                            <th scope="col">Растојание во km</th>
+                            <th scope="col">Време на пристигнување</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
+                            <td>
+                                <img th:src="@{${firstFuel.getImageUrl()}}" style="height: 100px; width: 100px" />
+                            </td>
                             <td th:text="${firstFuel.getName()}"></td>
                             <td th:text="${firstDistance}"></td>
                             <td th:text="${firstTime}"></td>
                         </tr>
                         <tr>
+                            <td>
+                                <img th:src="@{${secondFuel.getImageUrl()}}" style="height: 100px; width: 100px" />
+                            </td>
                             <td th:text="${secondFuel.getName()}"></td>
                             <td th:text="${secondDistance}"></td>
                             <td th:text="${secondTime}"></td>
                         </tr>
-
                         </tbody>
                     </table>
                 </div>
 
+         <!--   <ul style="list-style: none">
+                <li th:each="fuel:${fuels}">
+                    <input style="font-weight: bold" type="radio" name="chosenFuel" th:text="${fuel.getName()}" th:value="${fuel.getName()}">
+                </li>
+            </ul>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <a type="button" class="btn btn-primary" href="/home">Back</a>
+            <button style="margin-left: 450px;" type="submit" class="btn btn-primary">Submit</button>
             </form>
+
+        </div>
+        <div style="display: inline; float: left">
+            <ul style="list-style: none">
+                <li th:each="distance:${distances}" style="font-weight: bold" th:text="${distance}"></li>
+            </ul>
+        </div>
+        <div style="display: inline; float: left">
+            <ul style="list-style: none">
+                <li th:each="time:${times}" style="font-weight: bold" th:text="${time}"></li>
+            </ul>
+        </div>-->
+
+                <a style="color: darkgreen;margin-right: 15px; text-decoration: none; font-family: 'Arial Rounded MT Bold', sans-serif" th:href="@{/showMap/{fuelId}(fuelId=${firstFuel.getId()})}">Поднеси</a>
+                <a type="button" class="btn btn-info" href="/home" style="font-family: 'Arial Rounded MT Bold', sans-serif">Назад</a>
 
         </div>
     </div>
 
 </section>
 
+<!-- Footer -->
+<footer class="text-black-50 mt-xl-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-lg-4 col-xl-3">
+                <h5>За нас</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <p class="mb-0">
+                    Ние сме Веб сајт кој Ви овозможува со помош на Вашиот профил да ја пронајдете најблиската бензинска пумпа од Вашата локација.
+                </p>
+            </div>
+
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
+                <h5>Линкови до некои мапи</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <ul class="list-unstyled">
+                    <li><a style="color: darkgreen" href="https://www.openstreetmap.org/#map=10/41.9143/21.3863">OpenStreetMap</a></li>
+                    <li><a style="color: darkgreen" href="https://www.google.com/maps">Google Maps</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-3">
+                <h5>Контакт</h5>
+                <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                <ul class="list-unstyled">
+                    <li><i class="fa fa-home mr-2"></i>Теодора Периќ</li>
+                    <li><i class="fa fa-envelope mr-2"></i>tea.perik@yahoo.com</li>
+                    <li><i class="fa fa-phone mr-2"></i> 075/249-675</li><br/>
+
+                    <li><i class="fa fa-home mr-2"></i>Ива Угриноска</li>
+                    <li><i class="fa fa-envelope mr-2"></i> iva.ugrinoska@yahoo.com</li>
+                    <li><i class="fa fa-phone mr-2"></i> 071/233-455</li><br/>
+
+                    <li><i class="fa fa-home mr-2"></i>Сара Паункоска</li>
+                    <li><i class="fa fa-envelope mr-2"></i> sara.paunkoska@yahoo.com</li>
+                    <li><i class="fa fa-print mr-2"></i>070/123-452</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3" style="background-color: cadetblue">
+        © 2021 Copyright: Team SIT
+    </div>
+</footer>
 </body>
 </html>

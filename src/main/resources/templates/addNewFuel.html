@@ -8,10 +8,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
-<body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<body style="background-color: #cedbd8">
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: cadetblue;">
     <div class="container">
-        <a class="navbar-brand" href="/home">FUELS</a>
+        <a class="navbar-brand" href="/home" style="font-style: oblique; font-family:'Andale Mono', monospace; color: aliceblue">Бензински пумпи</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
             <ul class="navbar-nav m-auto">
                 <li class="nav-item m-auto">
-                    <a class="nav-link active" href="/home">Home</a>
+                    <a class="navbar-brand" href="/home" style="font-style: oblique; font-family:'Andale Mono', monospace; color: aliceblue">Бензински пумпи</a>
                 </li>
             </ul>
 
@@ -31,7 +31,7 @@
 
                     </th:block></a></li>
                 <li class="nav-item"><a class="btn btn-light btn-sm ml-3" href="/logout">
-                    <i class="fa fa-shopping-cart"></i> Logout
+                    <i class="fa fa-shopping-cart" style="font-family:'Andale Mono', monospace; font-style: oblique; margin-top: 15px"></i> Одјави се
                 </a></li>
             </ul>
 
@@ -41,17 +41,29 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">ADD OR EDIT FUEL</h1>
+        <h1 class="jumbotron-heading">Додади или промени ги информациите за бензинската пумпа</h1>
     </div>
 </section>
 
 <div class="container">
-    <div class="row">
+    <div class="row" style="position: center">
         <div class="col-md-5">
             <form th:method="POST" th:action="@{/showAndAddFuel/add-fuel}">
                 <input id="id" type="hidden" name="id" th:value="(${selectedFuel} != null ? ${selectedFuel.getId()} : '')">
+
                 <div class="form-group">
-                    <label for="fuelName">Fuel name</label>
+                    <label for="imageUrl">Лого</label>
+                    <input type="text"
+                           class="form-control"
+                           id="imageUrl"
+                           name="imageUrl"
+                           th:value="(${selectedFuel} != null ? ${selectedFuel.getImageUrl()} : '')"
+                           required
+                           placeholder="Enter fuel logo">
+                </div>
+
+                <div class="form-group">
+                    <label for="fuelName">Име</label>
                     <input type="text"
                            class="form-control"
                            id="fuelName"
@@ -61,7 +73,7 @@
                            placeholder="Enter fuel name">
                 </div>
                 <div class="form-group">
-                    <label for="fuelLat">Latitude</label>
+                    <label for="fuelLat">Географска ширина</label>
                     <input type="text"
                            class="form-control"
                            id="fuelLat"
@@ -71,7 +83,7 @@
                            placeholder="Latitude">
                 </div>
                 <div class="form-group">
-                    <label for="fuelLong">Longitude</label>
+                    <label for="fuelLong">Географска должина</label>
                     <input type="text"
                            class="form-control"
                            id="fuelLong"
@@ -80,8 +92,18 @@
                            required
                            placeholder="Longitude">
                 </div>
-                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-                <a type="button" class="btn btn-primary" th:href="@{/showAndAddFuel}">Back</a>
+                <div class="form-group">
+                    <label for="pageLink">Географска должина</label>
+                    <input type="text"
+                           class="form-control"
+                           id="pageLink"
+                           name="pageLink"
+                           th:value="(${selectedFuel} != null ? ${selectedFuel.getPageLink()} : '')"
+                           required
+                           placeholder="PageLink">
+                </div>
+                <button id="submit" type="submit" class="btn btn-secondary">Поднеси</button>
+                <a type="button" class="btn btn-secondary" th:href="@{/showAndAddFuel}">Назад</a> <br/><br/>
             </form>
         </div>
     </div>

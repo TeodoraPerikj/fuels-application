@@ -46,12 +46,14 @@ public class ShowAndAddFuelController {
         String fuelName = request.getParameter("fuelName");
         Float fuelLat = Float.parseFloat(request.getParameter("fuelLat"));
         Float fuelLong = Float.parseFloat(request.getParameter("fuelLong"));
+        String imageUrl = request.getParameter("imageUrl");
+        String pageLink = request.getParameter("pageLink");
 
         if(id != null){
-            this.fuelService.editFuel(id, fuelName, fuelLat, fuelLong);
+            this.fuelService.editFuel(id, fuelName, fuelLat, fuelLong, imageUrl, pageLink);
         }
         else {
-            this.fuelService.addNewFuel(fuelName, fuelLat, fuelLong);
+            this.fuelService.addNewFuel(fuelName, fuelLat, fuelLong, imageUrl, pageLink);
         }
 
         return "redirect:/showAndAddFuel";
