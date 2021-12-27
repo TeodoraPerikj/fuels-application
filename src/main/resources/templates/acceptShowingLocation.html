@@ -10,33 +10,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
 </head>
-<!--
-<body style="background-color: #cedbd8">
-
-    <div style="background-image: url('https://www.lifewire.com/thmb/6DrtO40qnoND20afLabJ8MHUN4w=/1614x1105/filters:fill(auto,1)/Maplocation_-5a492a4e482c52003601ea25.jpg'); background-size:100% 100%; height:700px; "></div>
-
-<div class="container">
-<br/>
-<h3 style="font-family: 'Franklin Gothic Book',sans-serif" class="form-signin-heading">Доколку сакате да ја користите нашата апликација, потребно е да ја споделите Вашата локација.</h3>
-<form class="form-signin mt-xl-5" th:method="POST" th:action="@{/acceptShowingLocation}">
-
-    <select name="accept" style="font-family: 'Cambria Math', serif">
-        <option th:value="YES" >Дозволувам споделување на мојата локација</option>
-        <option th:value="NO">Не дозволувам споделување на мојата локација</option>
-    </select>
-
-    <button class="btn btn btn-secondary btn-lg" type="submit">Поднеси</button>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-</form>
-</div>
-
-</body>
-</html>
--->
 
 <body style="background-color: #cedbd8">
 
@@ -50,7 +23,7 @@
                 <option th:value="NO">Не дозволувам споделување на мојата локација</option>
             </select>
             <br/><br/><br/>
-            <button class="btn btn btn-secondary btn-lg" type="submit">Поднеси</button>
+            <button id='acceptButton' class="btn btn btn-secondary btn-lg" type="submit">Поднеси</button>
         </form>
     </div>
     <br/><br/><br/>

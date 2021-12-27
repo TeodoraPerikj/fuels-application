@@ -3,7 +3,7 @@
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
-    <title>Show Fuels</title>
+    <title>Сите бензински пумпи</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -66,7 +66,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="fuel : ${showAllFuels}" class="product">
+                    <tr th:each="fuel : ${showAllFuels}" class="fuel">
                         <td>
                             <img th:src="@{${fuel.getImageUrl()}}" style="height: 100px; width: 100px" />
                         </td>
@@ -78,14 +78,14 @@
                                 <form th:action="@{'/showAndAddFuel/delete/{id}' (id=${fuel.getId()})}"
                                       th:method="DELETE">
                                     <button type="submit"
-                                            class="btn btn-sm btn-danger delete-product">
+                                            class="btn btn-sm btn-danger delete-product deleteButton">
                                         <i class="fa fa-trash">Избриши</i>
                                     </button>
                                 </form>
                             </th:block>
                             <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                                 <a th:href="@{'/showAndAddFuel/edit-fuel/{id}' (id=${fuel.getId()})}"
-                                   class="btn btn-sm btn-info edit-product">
+                                   class="btn btn-sm btn-info edit-product editButton">
                                     <i class="fa fa-trash" style="font-family:'Andale Mono', monospace">Промени</i>
                                 </a>
                             </th:block>
@@ -101,7 +101,7 @@
         <div class="col mb-3">
             <div class="row">
                 <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/showAndAddFuel/addNewFuel}" class="btn btn-block btn-info add-product-btn" style="font-family:'Andale Mono', monospace; font-style: oblique;">
+                    <a th:href="@{/showAndAddFuel/addNewFuel}" class="btn btn-block btn-info add-product-btn addButton" style="font-family:'Andale Mono', monospace; font-style: oblique;">
                         Додади нова бензинска
                     </a>
                 </div>

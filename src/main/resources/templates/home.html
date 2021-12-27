@@ -3,7 +3,7 @@
       xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:https="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
-    <title>Home</title>
+    <title>Почетна</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -25,11 +25,11 @@
                 </li>
 
                 <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active" th:href="@{/showAndAddFuel}" style="font-family:'Andale Mono', monospace; color: aliceblue">Бензински</a>
+                    <a class="nav-link active" id="showAllFuels" th:href="@{/showAndAddFuel}" style="font-family:'Andale Mono', monospace; color: aliceblue">Бензински</a>
                 </li>
 
                 <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active" style="font-family:'Andale Mono', monospace; color: aliceblue" th:href="@{/showAndAddStreet}">Улици</a>
+                    <a class="nav-link active" id="showAllStreets" style="font-family:'Andale Mono', monospace; color: aliceblue" th:href="@{/showAndAddStreet}">Улици</a>
                 </li>
             </ul>
 
@@ -58,11 +58,11 @@
                 <br/>
 
                 <select id="location" name="location" style="font-family: 'Arial Rounded MT Bold', sans-serif; font-style: italic; margin-left: 200px;" >
-                    <option th:each="street:${streets}" th:text="${street.getName()}" th:value="${street.getName()}">
+                    <option class="streetsShown" th:each="street:${streets}" th:text="${street.getName()}" th:value="${street.getName()}">
                     </option>
                 </select>
                 <br/><br/>
-                <button type="submit" class="btn btn-info" style="margin-left: 160px;">Поднеси</button>
+                <button type="submit" id="locationButton" class="btn btn-info" style="margin-left: 160px;">Поднеси</button>
             </form>
 
             <div th:if="${hasError}" th:text="${error}" class="text-danger" style="padding-left: 200px;"></div>

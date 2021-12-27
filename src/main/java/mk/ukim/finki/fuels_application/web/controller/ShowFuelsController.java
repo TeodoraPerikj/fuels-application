@@ -3,6 +3,7 @@ package mk.ukim.finki.fuels_application.web.controller;
 
 import mk.ukim.finki.fuels_application.model.Fuel;
 import mk.ukim.finki.fuels_application.model.Street;
+import mk.ukim.finki.fuels_application.model.exceptions.FuelByNameNotFoundException;
 import mk.ukim.finki.fuels_application.service.FuelService;
 import mk.ukim.finki.fuels_application.service.StreetService;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,12 @@ public class ShowFuelsController {
     }
 
     @GetMapping
-    public String showFuels(Model model, HttpServletRequest request){
+    public String showFuels(@RequestParam(required = false) String error, Model model, HttpServletRequest request){
+
+        if(error != null && !error.isEmpty()){
+            model.addAttribute("hasError", "true");
+            model.addAttribute("error", error);
+        }
 
         String name = (String) request.getSession().getAttribute("location");
 
@@ -53,13 +59,6 @@ public class ShowFuelsController {
         String firstTime = times.get(0);
         String secondTime = times.get(1);
 
-//        model.addAttribute("firstFuel", firstFuel);
-//        model.addAttribute("secondFuel", secondFuel);
-//        model.addAttribute("firstDistance", firstDist);
-//        model.addAttribute("secondDistance", secondDist);
-//        model.addAttribute("firstTime", firstTime);
-//        model.addAttribute("secondTime", secondTime);
-
         model.addAttribute("fuels", fuels);
         model.addAttribute("distances", distances);
         model.addAttribute("times", times);
@@ -70,9 +69,14 @@ public class ShowFuelsController {
     @PostMapping
     public String chosenFuel(HttpServletRequest request){
 
-        Optional<Fuel> fuel = this.fuelService.findByName(request.getParameter("chosenFuel"));
-        request.getSession().setAttribute("finalFuel", fuel.get());
-        return "redirect:/showMap";
+        Optional<Fuel> fuel = null;
+        try {
+            fuel = this.fuelService.findByName(request.getParameter("chosenFuel"));
+            request.getSession().setAttribute("finalFuel", fuel.get());
+            return "redirect:/showMap";
+        }catch(FuelByNameNotFoundException exception){
+            return "redirect:/showFuels?error="+exception.getMessage();
+        }
     }
 
 }

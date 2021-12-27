@@ -23,7 +23,7 @@ public class FuelServiceImpl implements FuelService {
 
     @Override
     public Optional<Fuel> findByName(String name) {
-        return Optional.of(this.fuelRepository.findByName(name).orElseThrow(()->new FuelByNameNotFoundException(name)));
+        return Optional.of(this.fuelRepository.findByName(name).orElseThrow(FuelByNameNotFoundException::new));
     }
 
     @Override
@@ -87,15 +87,8 @@ public class FuelServiceImpl implements FuelService {
 
         for(Fuel fuel : fuels){
 
-//            double firstSin = Math.sin((fuel.getLatitude()*Math.PI)/180);
-//            double secondSin = Math.sin((street.getLatitude()*Math.PI)/180);
             double firstCos = Math.cos((fuel.getLatitude()*Math.PI)/180);
             double secondCos = Math.cos((street.getLatitude()*Math.PI)/180);
-//            double thirdCos = Math.cos((street.getLongitude()*Math.PI)/180 - (fuel.getLongitude()*Math.PI)/180);
-//
-//            distance = Math.acos(firstSin*secondSin+firstCos*secondCos*thirdCos)*3963.0;//6371000;
-//
-//            Double distanceInKm = distance*1.609344;
 
             double latDistance = (Math.abs(fuel.getLatitude() - street.getLatitude())*Math.PI)/180;
             double lonDistance = (Math.abs(fuel.getLongitude() - street.getLongitude())*Math.PI)/180;
@@ -131,8 +124,6 @@ public class FuelServiceImpl implements FuelService {
             double t = (distance*3600)/50;
 
             time = (long) Math.ceil(t);
-
-//            times.add(time);
 
             if(time>=60 && time<120){
 

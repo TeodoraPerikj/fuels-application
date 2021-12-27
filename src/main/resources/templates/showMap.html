@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Избрана бензинска пумпа</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -83,7 +83,7 @@
 
         <div>
             <h3 style="font-family: 'Arial Rounded MT Bold',sans-serif">Име:</h3>
-            <b><th:block th:text="${session.finalFuel.getName()}"></th:block></b>
+            <b><th:block id="finalFuel" th:text="${session.finalFuel.getName()}"></th:block></b>
         </div><br/><hr>
         <div>
             <h3 style="font-family: 'Arial Rounded MT Bold',sans-serif">Географска должина:</h3>
