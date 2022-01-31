@@ -33,22 +33,22 @@ public class FuelServiceImpl implements FuelService {
 
     @Override
     public Optional<Fuel> findById(Long id) {
-        return Optional.of(this.fuelRepository.findById(id).orElseThrow(()->new FuelNotFoundException(id)));
+        return Optional.of(this.fuelRepository.findById(id).orElseThrow(() -> new FuelNotFoundException(id)));
     }
 
-    private Long getLowestFuelId(Street street, List<Fuel> fuels){
+    private Long getLowestFuelId(Street street, List<Fuel> fuels) {
         Long id = fuels.get(0).getId();
 
         Float distance1 = Math.abs(street.getLatitude() - fuels.get(0).getLatitude())
                 + Math.abs(street.getLongitude() - fuels.get(0).getLongitude());
 
 
-        for(Fuel fuel:fuels){
+        for (Fuel fuel : fuels) {
 
             Float newDistance = Math.abs(street.getLatitude() - fuel.getLatitude())
                     + Math.abs(street.getLongitude() - fuel.getLongitude());
 
-            if(distance1>newDistance){
+            if (distance1 > newDistance) {
                 distance1 = newDistance;
                 id = fuel.getId();
             }
@@ -67,14 +67,14 @@ public class FuelServiceImpl implements FuelService {
 
         Long id1 = getLowestFuelId(street, allFuels);
 
-        if(this.fuelRepository.findById(id1).isPresent())
+        if (this.fuelRepository.findById(id1).isPresent())
             firstTwo.add(this.fuelRepository.findById(id1).get());
 
-        allFuels.removeIf(f-> f.getId().equals(id1));
+        allFuels.removeIf(f -> f.getId().equals(id1));
 
         Long id2 = getLowestFuelId(street, allFuels);
 
-        if(this.fuelRepository.findById(id2).isPresent())
+        if (this.fuelRepository.findById(id2).isPresent())
             firstTwo.add(this.fuelRepository.findById(id2).get());
 
         return firstTwo;
@@ -85,22 +85,22 @@ public class FuelServiceImpl implements FuelService {
 
         List<Double> distances = new ArrayList<>();
 
-        for(Fuel fuel : fuels){
+        for (Fuel fuel : fuels) {
 
-            double firstCos = Math.cos((fuel.getLatitude()*Math.PI)/180);
-            double secondCos = Math.cos((street.getLatitude()*Math.PI)/180);
+            double firstCos = Math.cos((fuel.getLatitude() * Math.PI) / 180);
+            double secondCos = Math.cos((street.getLatitude() * Math.PI) / 180);
 
-            double latDistance = (Math.abs(fuel.getLatitude() - street.getLatitude())*Math.PI)/180;
-            double lonDistance = (Math.abs(fuel.getLongitude() - street.getLongitude())*Math.PI)/180;
+            double latDistance = (Math.abs(fuel.getLatitude() - street.getLatitude()) * Math.PI) / 180;
+            double lonDistance = (Math.abs(fuel.getLongitude() - street.getLongitude()) * Math.PI) / 180;
 
-            double a = Math.sin(latDistance/2) * Math.sin(latDistance/2) + Math.cos(firstCos)
-                    * Math.cos(secondCos) * Math.sin(lonDistance/2) * Math.sin(lonDistance/2);
+            double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) + Math.cos(firstCos)
+                    * Math.cos(secondCos) * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
 
-            double c =  2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-            double distanceInKm = 6371*c;
+            double distanceInKm = 6371 * c;
 
-            double roundedDistance = Math.round(distanceInKm*1000.0)/1000.0;
+            double roundedDistance = Math.round(distanceInKm * 1000.0) / 1000.0;
 
             distances.add(roundedDistance);
 
@@ -115,40 +115,35 @@ public class FuelServiceImpl implements FuelService {
 
         List<String> times = new ArrayList<>();
 
-        Long time = Long.valueOf(0);
+        Long time;
 
-        for(Double distance:distances){
+        for (Double distance : distances) {
 
             // THE ALLOWED SPEED IS 50KM/H
-
-            double t = (distance*3600)/50;
+            double t = (distance * 3600) / 50;
 
             time = (long) Math.ceil(t);
 
-            if(time>=60 && time<120){
+            if (time >= 60 && time < 120) {
 
                 Long seconds = time - 60;
 
-                if(seconds != 0){
-                    times.add("1 минута "+seconds+" секунди");
-                }
-                else {
+                if (seconds != 0) {
+                    times.add("1 минута " + seconds + " секунди");
+                } else {
                     times.add("1 минута");
                 }
 
-            }
-            else if(time>=120 && time<180){
+            } else if (time >= 120 && time < 180) {
                 Long seconds = time - 120;
 
-                if(seconds != 0){
-                    times.add("2 минути "+seconds+" секунди");
-                }
-                else {
+                if (seconds != 0) {
+                    times.add("2 минути " + seconds + " секунди");
+                } else {
                     times.add("2 минути");
                 }
-            }
-            else {
-                times.add(String.valueOf(time)+" секунди");
+            } else {
+                times.add(time + " секунди");
             }
 
         }
@@ -159,7 +154,7 @@ public class FuelServiceImpl implements FuelService {
     @Override
     @Transactional
     public Fuel addNewFuel(String name, Float latitude, Float longitude, String imageUrl, String pageLink) {
-        if(name.isEmpty())
+        if (name.isEmpty())
             return null;
 
         this.fuelRepository.deleteByName(name);
@@ -169,7 +164,7 @@ public class FuelServiceImpl implements FuelService {
 
     @Override
     public void deleteById(Long id) {
-       this.fuelRepository.deleteById(id);
+        this.fuelRepository.deleteById(id);
     }
 
     @Override

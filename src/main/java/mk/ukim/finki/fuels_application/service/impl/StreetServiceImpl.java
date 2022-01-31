@@ -1,8 +1,6 @@
 package mk.ukim.finki.fuels_application.service.impl;
 
-import mk.ukim.finki.fuels_application.model.Fuel;
 import mk.ukim.finki.fuels_application.model.Street;
-import mk.ukim.finki.fuels_application.model.exceptions.FuelNotFoundException;
 import mk.ukim.finki.fuels_application.model.exceptions.StreetByNameNotFoundException;
 import mk.ukim.finki.fuels_application.model.exceptions.StreetNotFoundException;
 import mk.ukim.finki.fuels_application.repository.jpa.StreetRepository;
@@ -26,13 +24,13 @@ public class StreetServiceImpl implements StreetService {
     @Override
     public Optional<Street> findByName(String name) {
         return Optional.of(this.streetRepository.findByName(name)
-                .orElseThrow(()->new StreetByNameNotFoundException(name)));
+                .orElseThrow(() -> new StreetByNameNotFoundException(name)));
     }
 
     @Override
     public Optional<Street> findById(Long id) {
         return Optional.of(this.streetRepository.findById(id)
-                .orElseThrow(()-> new StreetNotFoundException(id)));
+                .orElseThrow(() -> new StreetNotFoundException(id)));
     }
 
     @Override
@@ -44,11 +42,11 @@ public class StreetServiceImpl implements StreetService {
     @Transactional
     public Street addNewStreet(String name, Float latitude, Float longitude) {
 
-        if(name.isEmpty())
+        if (name.isEmpty())
             return null;
 
         this.streetRepository.deleteByName(name);
-       return this.streetRepository.save(new Street(name, latitude, longitude));
+        return this.streetRepository.save(new Street(name, latitude, longitude));
     }
 
     @Override

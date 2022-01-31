@@ -50,15 +50,6 @@ public class ShowFuelsController {
 
         List<String> times = this.fuelService.findTimes(distances);
 
-        Fuel firstFuel = fuels.get(0);
-        Fuel secondFuel = fuels.get(1);
-
-        Double firstDist = distances.get(0);
-        Double secondDist = distances.get(1);
-
-        String firstTime = times.get(0);
-        String secondTime = times.get(1);
-
         model.addAttribute("fuels", fuels);
         model.addAttribute("distances", distances);
         model.addAttribute("times", times);
@@ -69,7 +60,7 @@ public class ShowFuelsController {
     @PostMapping
     public String chosenFuel(HttpServletRequest request){
 
-        Optional<Fuel> fuel = null;
+        Optional<Fuel> fuel;
         try {
             fuel = this.fuelService.findByName(request.getParameter("chosenFuel"));
             request.getSession().setAttribute("finalFuel", fuel.get());
