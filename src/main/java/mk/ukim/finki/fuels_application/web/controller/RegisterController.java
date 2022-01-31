@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/register")
 public class RegisterController {
 
-    private final AuthService authService;
     private final UserService userService;
 
-    public RegisterController(AuthService authService, UserService userService) {
-        this.authService = authService;
+    public RegisterController(UserService userService) {
         this.userService = userService;
     }
 
@@ -41,14 +39,14 @@ public class RegisterController {
                            @RequestParam String surname) {
 
         try{
+            Role role;
             if(username.equals("teodora.perikj") || username.equals("iva.ugrinoska")
                     || username.equals("sara.paunkoska")){
-                Role role = Role.ROLE_ADMIN;
-                this.userService.register(username, password, repeatedPassword, name, surname, role);
+                role = Role.ROLE_ADMIN;
             } else {
-                Role role = Role.ROLE_USER;
-                this.userService.register(username, password, repeatedPassword, name, surname, role);
+                role = Role.ROLE_USER;
             }
+            this.userService.register(username, password, repeatedPassword, name, surname, role);
 
             return "redirect:/login";
         } catch (InvalidArgumentsException | PasswordsDoNotMatchException

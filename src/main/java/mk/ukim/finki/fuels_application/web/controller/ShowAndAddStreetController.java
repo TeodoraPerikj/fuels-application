@@ -1,6 +1,7 @@
 package mk.ukim.finki.fuels_application.web.controller;
 
 import mk.ukim.finki.fuels_application.model.Street;
+import mk.ukim.finki.fuels_application.model.exceptions.StreetNotFoundException;
 import mk.ukim.finki.fuels_application.service.StreetService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,16 +29,20 @@ public class ShowAndAddStreetController {
         }
 
         model.addAttribute("showAllStreets", this.streetService.findAll());
+        model.addAttribute("title", "Сите улици");
+        model.addAttribute("bodyContent", "showAllStreets");
 
-        return "showAllStreets";
+        return "master-template";
     }
 
     @GetMapping("/addNewStreet")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String addNewStreet(){
+    public String addNewStreet(Model model){
 
-        return "addNewStreet";
+        model.addAttribute("title", "Додади нова улица");
+        model.addAttribute("bodyContent", "addNewStreet");
 
+        return "master-template";
     }
 
     @PostMapping("/add-street")
@@ -70,9 +75,12 @@ public class ShowAndAddStreetController {
         if(this.streetService.findById(id).isPresent()){
             Street street = this.streetService.findById(id).get();
             model.addAttribute("selectedStreet", street);
-            return "addNewStreet";
+            model.addAttribute("title", "Додади нова улица");
+            model.addAttribute("bodyContent", "addNewStreet");
+
+            return "master-template";
         }
-        return "redirect:/showAndAddStreet?error=FuelNotFoundException";
+        return "redirect:/showAndAddStreet?error="+ new StreetNotFoundException(id).getMessage();
     }
 
 }

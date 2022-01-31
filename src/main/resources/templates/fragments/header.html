@@ -1,0 +1,39 @@
+<header xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <nav class="navbar navbar-expand-md navbar-light" style="background-color: cadetblue;" >
+        <div class="container">
+            <a class="navbar-brand" href="/home" style="font-style: oblique; font-family:'Andale Mono', monospace; color: aliceblue">Бензински пумпи</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+                <ul class="navbar-nav m-auto">
+                    <li class="nav-item m-auto">
+                        <a class="nav-link active" href="/home" style="font-family:'Andale Mono', monospace; color: aliceblue">Почетна</a>
+                    </li>
+
+                    <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link active" id="showAllFuels" th:href="@{/showAndAddFuel}" style="font-family:'Andale Mono', monospace; color: aliceblue">Бензински</a>
+                    </li>
+
+                    <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link active" id="showAllStreets" style="font-family:'Andale Mono', monospace; color: aliceblue" th:href="@{/showAndAddStreet}">Улици</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="nav-item"><a class="nav-link" th:href="@{/changeProfile}">
+                        <th:block th:if="${#request.getRemoteUser() != null}" th:text="${#request.getRemoteUser()}">
+
+                        </th:block></a></li>
+                    <li class="nav-item"><a class="btn btn-light btn-sm ml-3" href="/logout">
+                        <i class="fa fa-shopping-cart" style="font-family:'Andale Mono', monospace; font-style: oblique; margin-top: 15px"></i> Одјави се
+                    </a></li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>

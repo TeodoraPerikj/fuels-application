@@ -1,6 +1,7 @@
 package mk.ukim.finki.fuels_application.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,6 +12,7 @@ import java.util.Collections;
 @Data
 @Entity
 @Table(name = "application_user")
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -32,10 +34,6 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired = true;
 
     private boolean isEnabled = true;
-
-    public User() {
-
-    }
 
     public User(String name, String surname, String username, String password, Role role) {
         this.name = name;

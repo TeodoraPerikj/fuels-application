@@ -27,8 +27,10 @@ public class ChangeProfileController {
         User user = (User) authentication.getPrincipal();
 
         model.addAttribute("user", user);
+        model.addAttribute("title", "Промени го твојот профил");
+        model.addAttribute("bodyContent", "changeProfile");
 
-        return "changeProfile";
+        return "master-template";
     }
 
     @PostMapping

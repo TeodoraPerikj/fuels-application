@@ -1,6 +1,7 @@
 package mk.ukim.finki.fuels_application.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Street {
 
     @Id
@@ -19,9 +21,6 @@ public class Street {
     private Float latitude;
 
     private Float longitude;
-
-    public Street() {
-    }
 
     public Street(String name, Float latitude, Float longitude) {
         this.name = name;

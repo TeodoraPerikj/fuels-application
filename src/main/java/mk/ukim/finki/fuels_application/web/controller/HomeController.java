@@ -18,11 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeController {
 
     private final StreetService streetService;
-    private final FuelService fuelService;
 
-    public HomeController(StreetService streetService, FuelService fuelService) {
+    public HomeController(StreetService streetService) {
         this.streetService = streetService;
-        this.fuelService = fuelService;
     }
 
     @GetMapping
@@ -34,8 +32,9 @@ public class HomeController {
         }
 
         model.addAttribute("streets", this.streetService.findAll());
-
-        return "home";
+        model.addAttribute("title", "Почетна");
+        model.addAttribute("bodyContent", "home");
+        return "master-template";
     }
 
     @PostMapping
@@ -50,7 +49,6 @@ public class HomeController {
         }catch (StreetByNameNotFoundException exception){
             return "redirect:/home?error="+exception.getMessage();
         }
-
 
     }
 

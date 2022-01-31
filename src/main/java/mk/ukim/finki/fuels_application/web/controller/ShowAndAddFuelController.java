@@ -1,6 +1,7 @@
 package mk.ukim.finki.fuels_application.web.controller;
 
 import mk.ukim.finki.fuels_application.model.Fuel;
+import mk.ukim.finki.fuels_application.model.exceptions.FuelNotFoundException;
 import mk.ukim.finki.fuels_application.service.FuelService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,15 +29,20 @@ public class ShowAndAddFuelController {
         }
 
         model.addAttribute("showAllFuels", this.fuelService.findAll());
+        model.addAttribute("title", "Сите бензински пумпи");
+        model.addAttribute("bodyContent", "showAllFuels");
 
-        return "showAllFuels";
+        return "master-template";
     }
 
     @GetMapping("/addNewFuel")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String addNewFuel(){
+    public String addNewFuel(Model model){
 
-        return "addNewFuel";
+        model.addAttribute("title", "Додади нова бензинска пумпа");
+        model.addAttribute("bodyContent", "addNewFuel");
+
+        return "master-template";
     }
 
     @PostMapping("/add-fuel")
@@ -72,8 +78,11 @@ public class ShowAndAddFuelController {
         if(this.fuelService.findById(id).isPresent()){
             Fuel fuel = this.fuelService.findById(id).get();
             model.addAttribute("selectedFuel", fuel);
-            return "addNewFuel";
+            model.addAttribute("title", "Додади нова бензинска пумпа");
+            model.addAttribute("bodyContent", "addNewFuel");
+
+            return "master-template";
         }
-        return "redirect:/showAndAddFuel?error=FuelNotFoundException";
+        return "redirect:/showAndAddFuel?error="+ new FuelNotFoundException(id).getMessage();
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,14 +23,19 @@ public class LoginController {
     }
 
     @GetMapping
-    public String getLoginPage() {
+    public String getLoginPage(@RequestParam(required = false) String error, Model model) {
+
+        if(error != null && !error.isEmpty()){
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", error);
+        }
 
         return "login";
     }
 
     @PostMapping
     public String login(HttpServletRequest request, Model model) {
-        User user = null;
+        User user;
         try{
             user = this.authService.login(request.getParameter("username"),
                     request.getParameter("password"));
@@ -37,9 +43,7 @@ public class LoginController {
             return "redirect:/acceptShowingLocation";
         }
         catch (InvalidUserCredentialsException | InvalidArgumentsException exception) {
-            model.addAttribute("hasError", true);
-            model.addAttribute("error", exception.getMessage());
-            return "login";
+            return "redirect:/login?error="+exception.getMessage();
         }
     }
 

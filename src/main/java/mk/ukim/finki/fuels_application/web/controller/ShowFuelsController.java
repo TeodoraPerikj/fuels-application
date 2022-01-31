@@ -42,7 +42,10 @@ public class ShowFuelsController {
 
         String name = (String) request.getSession().getAttribute("location");
 
-        Street street = this.streetService.findByName(name).get();
+        Street street = null;
+
+        if(this.streetService.findByName(name).isPresent())
+            street = this.streetService.findByName(name).get();
 
         List<Fuel> fuels = this.fuelService.findFirstTwo(street);
 
@@ -53,8 +56,10 @@ public class ShowFuelsController {
         model.addAttribute("fuels", fuels);
         model.addAttribute("distances", distances);
         model.addAttribute("times", times);
+        model.addAttribute("title", "Прикажи бензински пумпи");
+        model.addAttribute("bodyContent", "showFuels");
 
-        return "showFuels";
+        return "master-template";
     }
 
     @PostMapping
@@ -63,7 +68,12 @@ public class ShowFuelsController {
         Optional<Fuel> fuel;
         try {
             fuel = this.fuelService.findByName(request.getParameter("chosenFuel"));
-            request.getSession().setAttribute("finalFuel", fuel.get());
+            Fuel foundFuel = null;
+            if(fuel.isPresent()){
+                foundFuel = fuel.get();
+            }
+
+            request.getSession().setAttribute("finalFuel", foundFuel);
             return "redirect:/showMap";
         }catch(FuelByNameNotFoundException exception){
             return "redirect:/showFuels?error="+exception.getMessage();

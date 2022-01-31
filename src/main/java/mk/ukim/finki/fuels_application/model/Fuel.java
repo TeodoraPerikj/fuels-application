@@ -1,11 +1,13 @@
 package mk.ukim.finki.fuels_application.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Fuel {
 
     @Id
@@ -19,10 +21,6 @@ public class Fuel {
     private Float longitude;
     private String imageUrl;
     private String pageLink;
-
-
-    public Fuel() {
-    }
 
     public Fuel(String name, Float latitude, Float longitude, String imageUrl, String pageLink) {
         this.name = name;

@@ -23,7 +23,8 @@ public class FuelServiceImpl implements FuelService {
 
     @Override
     public Optional<Fuel> findByName(String name) {
-        return Optional.of(this.fuelRepository.findByName(name).orElseThrow(FuelByNameNotFoundException::new));
+        return Optional.of(this.fuelRepository.findByName(name)
+                .orElseThrow(FuelByNameNotFoundException::new));
     }
 
     @Override
@@ -80,6 +81,24 @@ public class FuelServiceImpl implements FuelService {
         return firstTwo;
     }
 
+    private double calculateDistance(Fuel fuel, Street street){
+
+        double firstCos = Math.cos((fuel.getLatitude() * Math.PI) / 180);
+        double secondCos = Math.cos((street.getLatitude() * Math.PI) / 180);
+
+        double latDistance = (Math.abs(fuel.getLatitude() - street.getLatitude()) * Math.PI) / 180;
+        double lonDistance = (Math.abs(fuel.getLongitude() - street.getLongitude()) * Math.PI) / 180;
+
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) + Math.cos(firstCos)
+                * Math.cos(secondCos) * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        double distanceInKm = 6371 * c;
+
+        return Math.round(distanceInKm * 1000.0) / 1000.0;
+    }
+
     @Override
     public List<Double> findDistances(List<Fuel> fuels, Street street) {
 
@@ -87,23 +106,9 @@ public class FuelServiceImpl implements FuelService {
 
         for (Fuel fuel : fuels) {
 
-            double firstCos = Math.cos((fuel.getLatitude() * Math.PI) / 180);
-            double secondCos = Math.cos((street.getLatitude() * Math.PI) / 180);
-
-            double latDistance = (Math.abs(fuel.getLatitude() - street.getLatitude()) * Math.PI) / 180;
-            double lonDistance = (Math.abs(fuel.getLongitude() - street.getLongitude()) * Math.PI) / 180;
-
-            double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) + Math.cos(firstCos)
-                    * Math.cos(secondCos) * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-
-            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-            double distanceInKm = 6371 * c;
-
-            double roundedDistance = Math.round(distanceInKm * 1000.0) / 1000.0;
+            double roundedDistance = calculateDistance(fuel, street);
 
             distances.add(roundedDistance);
-
         }
 
         return distances;

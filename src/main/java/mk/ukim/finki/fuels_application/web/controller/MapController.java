@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/showMap")
 public class MapController {
-    private final FuelService fuelService;
 
-    public MapController(FuelService fuelService) {
-        this.fuelService = fuelService;
-    }
+    public MapController() {}
 
     @GetMapping
     public String getPage()
